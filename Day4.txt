@@ -1,0 +1,132 @@
+Day 4
+Exercises
+
+- Activity 1
+	Given a Student Database with Holding Student details as below find the datatype that goes well with each column
+
+Table Name : StudentDetails
+ID
+FirstName
+LastName
+Gender
+Email
+YearOfBirth
+
+- Activity 2
+	Create table using the create table command for the above specified table
+
+CREATE TABLE StudentDetails
+(
+id int not null unique,
+FirstName varchar(100) not null,
+LastName varchar(100) not null,
+gender enum("M","F","O"),
+email varchar(150) not null unique,
+YearOfBirth YEAR not null
+)
+
+- Activity 3
+	- Alter above table add new Column 'Year Of Admission'
+
+ALTER Table StudentDetails 
+ADD COLUMN YearOfAdmission Year;
+
+
+	- Alter above table change Column Name 'Year Of Birth' to 'Date Of Birth'
+(hint ensure the data type of the same to be 'Date')
+
+ALTER Table StudentDetails 
+Change Column YearOfBirth DateOfBirth date;
+
+
+
+- Activity 4
+ 	Insert Data into the above table in such a way that there are minimum of
+	- 2 students born in year 2000
+	- 5 students with same year of admission
+	- 2 students with same first name
+	- 2 students with same last name
+	- 2 students with same first and last name
+
+
+INSERT INTO StudentDetails  
+(id,FirstName,LastName,gender,email,DateOfBirth,YearOfAdmission)
+VALUES (1,"Bhargav","S","M","bhargav@gmail.com","2000-12-12",2021),
+(2,"Bhargavi","M","F","bhargavi@gmail.com","2000-08-12",2021),
+(3,"Amal","G","M","amalg@gmail.com","2002-07-12",2021),
+(4,"Aneesh","A","M","aneesh@gmail.com","2000-05-20",2021),
+(5,"Bhargav","P","M","bhargavp@gmail.com","2001-01-12",2021),
+(6,"Naveen","M","M","naveen@gmail.com","2001-08-17",2021),
+(7,"Amal","G","M","amal1@gmail.com","2000-03-21",2020);
+(8,"Arun","K","M","arun@gmail.com","1999-08-12",2021),
+(9,"anet","n","F","anetg@gmail.com","2001-07-01",2021),
+(10,"fahad","I","M","fahadi@gmail.com","2000-01-09",2021),
+(11,"abinav","P","M","abinavp@gmail.com","2003-05-12",2021),
+(10,"fahad","I","M","fahad@gmail.com","2001-01-04",2021),;
+
+
+
+- Activity 5
+	Add New Column 'Branch' and 'Std' with appropriate data types and update entries for each column. Branch for students below 10th std would be ‘NA’
+
+ALTER TABLE StudentDetails
+Add Column Std int;
+Add Column Branch varchar(10);
+
+
+- Activity 6
+	Find students count born in year 2000
+
+Select Count(*)from StudentDetails where YEAR(DateOfBirth)=2000;
+
+
+- Activity 7
+	Group students based on year of admission along with number of students in each year
+
+SELECT YearOfAdmission ,COUNT(*)as NoOfStudents from StudentDetails 
+group by YearOfAdmission;
+
+
+- Activity 8
+	List number of students in each year of admission and also list them based on gender.
+
+SELECT YearOfAdmission,COUNT(*) as NoOfStudents,gender from StudentDetails 
+group by YearOfAdmission,gender;
+
+
+- Activity 9
+	List number of students with same first name, last name and first and last name
+
+               #sameFirstName
+SELECT COUNT(*)as FirstNameCount 
+FROM StudentDetails  
+WHERE FirstName IN (SELECT FirstName 
+            FROM StudentDetails
+            group by FirstName having COUNT(*) >1);
+
+         #sameLastName
+SELECT COUNT(*) as LastNameCount
+FROM StudentDetails  
+WHERE (LastName) IN (SELECT LastName 
+            FROM StudentDetails
+            group by LastName having COUNT(*) >1);          
+  
+         #Same first and Last Name
+SELECT COUNT(*) as SameNameCount
+FROM StudentDetails  
+WHERE (FirstName,LastName) IN (SELECT FirstName,LastName 
+            FROM StudentDetails
+            group by FirstName,LastName having COUNT(*) >1);
+  
+
+- Activity 10
+	Find the year with the maximum and minimum number of students
+
+SELECT max(YearOfAdmission),min(YearOfAdmission)
+From StudentDetails ;
+
+- Activity 11
+	Order the students by DOB and list only the top 10 students.
+
+SELECT * FROM StudentDetails order by DateOfBirth ASC LIMIT 10;
+
