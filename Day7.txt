@@ -71,7 +71,6 @@ INTERSECT
 Select FirstName,Subject,Marks,Std from
 Marks Inner join StudentDETAILS on StudentDetails.id = Marks.id And Marks>90 AND AcadamicYear = Year(Now())-1;
 
-
 - Activity 9
 Add marks of every subject of each student and then,
 - Find which student scored the highest total mark in the current academic year of std X
