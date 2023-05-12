@@ -56,6 +56,20 @@ WHERE FirstName ="ANEESH";
 - Activity 6
 Design one or more extra tables for the Student Database on your own and come up with PK FK and other relationships
 
+Create Table Elective
+(
+id int NOT NULL UNIQUE ,
+name varchar(100) NOT NULL,
+Primary Key (id)
+)
+
+
+ALTER Table StudentDetails 
+ADD COLUMN ElectiveId int,
+Add Foreign Key (ElectiveId) References Elective(Id);
+
+
+
 - Activity 7
 Find students for whom no marks have been entered.( hint left join)
 
