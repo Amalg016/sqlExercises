@@ -79,11 +79,10 @@ Select StudentDetails.* from StudentDETAILS left join Marks on StudentDetails.id
 - Activity 8
 List first name , subject, mark, Std of the students whose marks is greater than 90% in two Subjects of the current academic year and previous academic year. (hint check for Joins, set operation)
 
-Select FirstName,Subject,Marks,Std from
-Marks Inner join StudentDETAILS on StudentDetails.id = Marks.id And Marks>90 AND AcadamicYear = Year(Now())  
+SELECT s.firstName,ma.Subject,ma.marks,s.std from StudentDetails s inner join marks ma on s.id = ma.id where s.id in (
+Select M.id from Marks M where M.marks>90 and  m.AcadamicYear =YEAR (NOW()) GROUP BY m.ID HAVING  COUNT(m.id)>1
 INTERSECT 
-Select FirstName,Subject,Marks,Std from
-Marks Inner join StudentDETAILS on StudentDetails.id = Marks.id And Marks>90 AND AcadamicYear = Year(Now())-1;
+Select M.id from Marks M where M.marks>90 and  m.AcadamicYear =YEAR (NOW())-1 GROUP BY m.ID HAVING  COUNT(m.id)>1);
 
 - Activity 9
 Add marks of every subject of each student and then,
